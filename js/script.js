@@ -6,6 +6,52 @@ let direction = "right";
 let jogo;
 let food;
 
+/* Movimento para o celular */
+let startX, startY, endX, endY;
+
+// Detecta quando começa o toque
+document.addEventListener(
+	"touchstart",
+	function (e) {
+		startX = e.touches[0].clientX;
+		startY = e.touches[0].clientY;
+	},
+	false
+);
+
+// Detecta quando solta o dedo
+document.addEventListener(
+	"touchend",
+	function (e) {
+		endX = e.changedTouches[0].clientX;
+		endY = e.changedTouches[0].clientY;
+
+		handleSwipe();
+	},
+	false
+);
+
+function handleSwipe() {
+	let diffX = endX - startX;
+	let diffY = endY - startY;
+
+	if (Math.abs(diffX) > Math.abs(diffY)) {
+		// Movimento horizontal
+		if (diffX > 0 && direction !== "left") {
+			direction = "right";
+		} else if (diffX < 0 && direction !== "right") {
+			direction = "left";
+		}
+	} else {
+		// Movimento vertical
+		if (diffY > 0 && direction !== "up") {
+			direction = "down";
+		} else if (diffY < 0 && direction !== "down") {
+			direction = "up";
+		}
+	}
+}
+
 // Inicializa o jogo
 function iniciarJogo() {
 	snake = [{ x: 8 * box, y: 8 * box }];
