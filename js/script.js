@@ -6,31 +6,6 @@ let direction = "right";
 let jogo;
 let food;
 
-/* Movimento para o celular */
-let startX, startY, endX, endY;
-
-// Detecta quando começa o toque
-document.addEventListener(
-	"touchstart",
-	function (e) {
-		startX = e.touches[0].clientX;
-		startY = e.touches[0].clientY;
-	},
-	false
-);
-
-// Detecta quando solta o dedo
-document.addEventListener(
-	"touchend",
-	function (e) {
-		endX = e.changedTouches[0].clientX;
-		endY = e.changedTouches[0].clientY;
-
-		handleSwipe();
-	},
-	false
-);
-
 function handleSwipe() {
 	let diffX = endX - startX;
 	let diffY = endY - startY;
@@ -149,6 +124,48 @@ function loop() {
 	let newHead = { x: snakeX, y: snakeY };
 	snake.unshift(newHead);
 }
+// Bloqueia rolagem da tela no celular
+document.addEventListener(
+	"touchmove",
+	function (e) {
+		e.preventDefault();
+	},
+	{ passive: false }
+);
+
+/* Movimento para o celular */
+let startX, startY, endX, endY;
+
+// Detecta quando começa o toque
+document.addEventListener(
+	"touchstart",
+	function (e) {
+		startX = e.touches[0].clientX;
+		startY = e.touches[0].clientY;
+	},
+	false
+);
+
+// Detecta quando solta o dedo
+document.addEventListener(
+	"touchend",
+	function (e) {
+		endX = e.changedTouches[0].clientX;
+		endY = e.changedTouches[0].clientY;
+
+		handleSwipe();
+	},
+	false
+);
+
+// Bloqueia rolagem da tela no celular
+document.addEventListener(
+	"touchmove",
+	function (e) {
+		e.preventDefault();
+	},
+	{ passive: false }
+);
 
 // Botão para reiniciar
 document.getElementById("restart-Btn").addEventListener("click", iniciarJogo);
